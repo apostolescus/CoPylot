@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "907492097329",
+    "firebase_url": "https://pita-13817-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "pita-13817",
+    "storage_bucket": "pita-13817.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:907492097329:android:78602f9ba0b4204c818410",
+        "android_client_info": {
+          "package_name": "com.example.copilot"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "907492097329-7fvdq1jftuvkdmt605cuimv7h671s5bt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBuDKp8pMwLt152jea4Yx2dVucLRiYS_mc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "907492097329-7fvdq1jftuvkdmt605cuimv7h671s5bt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
