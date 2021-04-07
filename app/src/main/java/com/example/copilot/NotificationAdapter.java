@@ -41,56 +41,63 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         //convertView.setBackground(ContextCompat.getDrawable(getContext(), R.drawable.alert_background));
         TextView tvTime = (TextView) convertView.findViewById(R.id.textViewAppearanceTime);
         TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewSignCategory);
+        TextView tvalertCounter = (TextView) convertView.findViewById(R.id.textViewAlertCounter);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.imageViewSignIcon);
+
 
         String message = notification.getName();
         Date current_date = notification.getDate();
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+2"));
+        sdf.setTimeZone(TimeZone.getTimeZone("GMT+3"));
         String formattedDate = sdf.format(current_date);
         tvTime.setText(formattedDate);
-//        tvMessage.setText(message);
+
 
         switch (message) {
             case "semaphore":
                 tvMessage.setText("Semaphore");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.yellow));
-                imageView.setImageResource(R.drawable.ic_semaphore);
+                imageView.setImageResource(R.drawable.ic_traffic_semaphore);
                 break;
             case "line_left":
                 tvMessage.setText("Line Left");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.yellow));
-                imageView.setImageResource(R.drawable.ic_untitled_cedeaza);
+                imageView.setImageResource(R.drawable.ic_traffic_left);
                 break;
             case "line_right":
                 tvMessage.setText("Line Right");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.yellow));
-                imageView.setImageResource(R.drawable.ic_semaphore);
+                imageView.setImageResource(R.drawable.ic_traffic_right);
                 break;
             case "pedestrian":
+                tvMessage.setText("Pedestrian");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.monza));
-                imageView.setImageResource(R.drawable.ic_semaphore);
+                imageView.setImageResource(R.drawable.ic_traffic_pedestrian);
                 break;
             case "frontal_collision":
                 tvMessage.setText("Frontal Collision");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.monza));
-                imageView.setImageResource(R.drawable.ic_semaphore);
+                imageView.setImageResource(R.drawable.ic_traffic_collision);
                 break;
-            case "traffic-sign":
-                tvMessage.setText("Traffic Sign");
-                tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.monza));
-                imageView.setImageResource(R.drawable.ic_stop);
-                break;
+//            case "traffic-sign":
+//                tvMessage.setText("Traffic Sign");
+//                tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.monza));
+//                imageView.setImageResource(R.drawable.ic_stop);
+//                break;
             case "stop":
+                tvMessage.setText("Stop Sign");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.monza));
-                imageView.setImageResource(R.drawable.ic_semaphore);
+                imageView.setImageResource(R.drawable.ic_traffic_stop);
                 break;
             case "give_way":
+                tvMessage.setText("Give Way");
                 tvMessage.setTextColor(ContextCompat.getColor(getContext(), R.color.monza));
-                imageView.setImageResource(R.drawable.ic_semaphore);
+                imageView.setImageResource(R.drawable.ic_traffic_giveway);
                 break;
+
         }
 
+        tvalertCounter.setText(notification.getCounter());
         return  convertView;
     }
 }

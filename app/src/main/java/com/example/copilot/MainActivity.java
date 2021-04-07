@@ -3,16 +3,19 @@ package com.example.copilot;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
@@ -45,18 +48,67 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Notification> arrayOfNotifications = null;
 
     private NotificationAdapter adapter;
+    private int alertCounter = 0, intTotalTimeHours = 0, intTotalTimeMins = 0;
+    private TextView tvTotalTime, tvTotalMinutes, tvIncidentNumbers;
 
+    Thread thread = new Thread() {
+        @Override
+        public void run() {
+            try {
+                while(true) {
+
+                    if (intTotalTimeMins == 60) {
+                        intTotalTimeHours += 1;
+                        intTotalTimeMins = 0;
+                        updateTime(Integer.toString(intTotalTimeHours), true);
+                        updateTime(Integer.toString(intTotalTimeMins), false);
+                    }else {
+                        updateTime(Integer.toString(intTotalTimeMins), false);
+                    }
+                    Log.d("---Thread---", "Updated time: " + Integer.toString(intTotalTimeHours));
+                    sleep(60000);
+                }
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    };
+    public void updateTime(String value, boolean mode) {
+        final String str = value;
+
+        if (!mode) {
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvTotalMinutes.setText(str);
+                    Log.d("--- update Time --- ", "Text seted!" + str);
+                }
+            });
+        } else{
+            runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    tvTotalTime.setText(str);
+                    Log.d("--- update Time --- ", "Text seted!" + str);
+                }
+            });
+        }
+
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-//
         setContentView(R.layout.activity_main);
+        tvTotalTime = (TextView) findViewById(R.id.textViewTime);
+        tvTotalMinutes = (TextView) findViewById(R.id.textViewTimeMinutes);
+        tvIncidentNumbers = (TextView) findViewById(R.id.textViewIncidentNumbers);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("drivingInfos");
 
         myRef.addValueEventListener(new ValueEventListener() {
+
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot ds: snapshot.getChildren()){
@@ -66,10 +118,16 @@ public class MainActivity extends AppCompatActivity {
 
                     int speed = Integer.parseInt(String.valueOf(ds.child("speed").getValue()));
                     int danger = Integer.parseInt(String.valueOf(ds.child("danger").getValue()));
-                    String alert_type =  ds.child("type").getValue(String.class);
-                    arrayOfNotifications.add(0,new Notification(alert_type, itemDate, danger, speed));
-                    adapter.notifyDataSetChanged();
 
+                    String alert_type =  ds.child("type").getValue(String.class);
+                    arrayOfNotifications.add(0,new Notification(alert_type, itemDate, danger, speed, alertCounter));
+
+                    tvIncidentNumbers.setText(Integer.toString(alertCounter));
+
+                    adapter.notifyDataSetChanged();
+                    alertCounter++;
+
+                    Toast.makeText(getApplicationContext(),"New notification", Toast.LENGTH_SHORT).show();
                     //Toast.makeText(getApplicationContext(),"Alert is: " + alert_type, Toast.LENGTH_SHORT).show();
                     ds.getRef().removeValue();
                 }
@@ -81,6 +139,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        thread.start();
 
 //        try {
 //            FileInputStream file = openFileInput("cities.dat");
@@ -119,9 +178,10 @@ public class MainActivity extends AppCompatActivity {
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                arrayOfNotifications.add(0,new Notification("semaphore", new Date(), 0, 234));
+                arrayOfNotifications.add(0,new Notification("semaphore", new Date(), 0, 234,alertCounter));
                 adapter.notifyDataSetChanged();
-                Toast.makeText(getApplicationContext(),"New notification added"
+                alertCounter++;
+                Toast.makeText(getApplicationContext(),"New notification"
                         , Toast.LENGTH_SHORT).show();
             }
         });

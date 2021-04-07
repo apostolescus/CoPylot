@@ -17,12 +17,14 @@ public class Notification implements  Serializable, Comparable<Notification>{
     private int danger;
     private int speed;
     private Date time;
+    private int counter;
 
-    public Notification(String name, Date time, int danger, int speed) {
+    public Notification(String name, Date time, int danger, int speed, int counter) {
         this.name = name;
         this.time = time;
         this.danger = danger;
         this.speed = speed;
+        this.counter = counter;
     }
 
     //retrieve user's name
@@ -30,7 +32,9 @@ public class Notification implements  Serializable, Comparable<Notification>{
         return name;
     }
 
-
+    public String getCounter(){
+        return Integer.toString(counter);
+    }
     public Date getDate(){
         return time;
     }
@@ -40,9 +44,9 @@ public class Notification implements  Serializable, Comparable<Notification>{
 
         Date current_date = new Date();
 
-        notifications.add(new Notification("semaphore", current_date, 0, 123));
-        notifications.add(new Notification("line_left", current_date, 1, 140));
-        notifications.add(new Notification("frontal_collision", current_date, 0, 340));
+        notifications.add(new Notification("semaphore", current_date, 0, 123,0));
+        notifications.add(new Notification("line_left", current_date, 1, 140,1));
+        notifications.add(new Notification("frontal_collision", current_date, 0, 340,2));
 
         return notifications;
     }
