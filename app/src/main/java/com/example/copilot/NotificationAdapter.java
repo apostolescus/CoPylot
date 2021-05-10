@@ -42,16 +42,21 @@ public class NotificationAdapter extends ArrayAdapter<Notification> {
         TextView tvTime = (TextView) convertView.findViewById(R.id.textViewAppearanceTime);
         TextView tvMessage = (TextView) convertView.findViewById(R.id.textViewSignCategory);
         TextView tvalertCounter = (TextView) convertView.findViewById(R.id.textViewAlertCounter);
+        TextView tvLat = (TextView)convertView.findViewById(R.id.textViewLat);
+        TextView tvLon = (TextView)convertView.findViewById(R.id.textViewLon);
         ImageView imageView = (ImageView) convertView.findViewById(R.id.imageViewSignIcon);
 
-
+        String lat = String.valueOf(notification.getLat());
+        String lon = String.valueOf(notification.getLon());
         String message = notification.getName();
-        Date current_date = notification.getDate();
-        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        Long current_date = notification.getDate();
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+3"));
         String formattedDate = sdf.format(current_date);
-        tvTime.setText(formattedDate);
 
+        tvTime.setText(formattedDate);
+        tvLat.setText(lat);
+        tvLon.setText(lon);
 
         switch (message) {
             case "semaphore":

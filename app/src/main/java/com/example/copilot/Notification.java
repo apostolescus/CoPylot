@@ -1,30 +1,35 @@
 package com.example.copilot;
 
-import android.provider.ContactsContract;
+
+
+import androidx.room.Entity;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 
-// lane cross; collision detection
-import java.util.ArrayList;
 
 public class Notification implements  Serializable, Comparable<Notification>{
 
     //declare private data instead of public to ensure the privacy of data field of each class
+
     private String name;
     private int danger;
     private int speed;
-    private Date time;
+    private long time;
     private int counter;
+    private double lat;
+    private double lon;
 
-    public Notification(String name, Date time, int danger, int speed, int counter) {
+    public Notification(String name, long time, int danger, int speed, int counter, double lat, double lon) {
         this.name = name;
         this.time = time;
         this.danger = danger;
         this.speed = speed;
         this.counter = counter;
+        this.lat = lat;
+        this.lon = lon;
     }
 
     //retrieve user's name
@@ -35,18 +40,30 @@ public class Notification implements  Serializable, Comparable<Notification>{
     public String getCounter(){
         return Integer.toString(counter);
     }
-    public Date getDate(){
+    public long getDate(){
         return time;
+    }
+    public int getDanger(){
+        return  danger;
+    }
+    public int getSpeed(){
+        return speed;
+    }
+    public double getLat(){
+        return this.lat;
+    }
+    public double getLon(){
+        return this.lon;
     }
 
     public static ArrayList<Notification> getNotifications() {
         ArrayList<Notification> notifications = new ArrayList<Notification>();
 
-        Date current_date = new Date();
+        Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 
-        notifications.add(new Notification("semaphore", current_date, 0, 123,0));
-        notifications.add(new Notification("line_left", current_date, 1, 140,1));
-        notifications.add(new Notification("frontal_collision", current_date, 0, 340,2));
+        notifications.add(new Notification("semaphore", timestamp.getTime(), 0, 123,0, 1,2));
+        notifications.add(new Notification("line_left", timestamp.getTime(), 1, 140,1, 1,2));
+        notifications.add(new Notification("frontal_collision", timestamp.getTime(), 0, 340,2,1,2));
 
         return notifications;
     }
@@ -56,8 +73,7 @@ public class Notification implements  Serializable, Comparable<Notification>{
         if (name.compareTo(o.name) != 0){
             return  name.compareTo(o.name);
         }
-        else{
-            return time.compareTo(o.time);
-        }
+        else return Long.compare(time, o.time);
     }
 }
+

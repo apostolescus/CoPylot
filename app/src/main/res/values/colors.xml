@@ -8,7 +8,17 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="sky_blue">#3399ff</color>
-    <color name="monza">#CF000F</color>
-    <color name="yellow">#ffcc00</color>
+   <!-- <color name="monza">#CF000F</color>
 
+     <color name="yellow">#EEB902</color>
+   -->
+    <color name="complementary">#ff9933</color>
+    <color name="sky_blue_darker">#3333ff</color>
+    <color name="sky_blue_lighter">#33ffff</color>
+    <color name="alert">#ff3399</color>
+    <color name="analogus">#33ffff</color>
+    <color name="monza">#FF5714</color>
+    <color name="yellow">#ffcc00</color>
+    <color name="golden_rod">#E8AA14</color>
+    <color name="light_green">#6EEB83</color>
 </resources>

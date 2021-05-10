@@ -44,18 +44,29 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:layout_weight="0.2">
+        android:layout_weight="0.2"
+        android:layout_marginRight="7dp">
 
         <TextView
+            android:id="@+id/textViewLat"
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:layout_weight="0.20"
             android:textAlignment="center"
-            android:text="Alert number"
+            android:text=""
             android:textSize="16dp"
-            android:textColor="@color/white"
+            android:textColor="@color/black"
             />
-
+        <TextView
+            android:id="@+id/textViewLon"
+            android:layout_width="match_parent"
+            android:layout_height="20dp"
+            android:layout_weight="0.20"
+            android:textAlignment="center"
+            android:text=""
+            android:textSize="16dp"
+            android:textColor="@color/black"
+            />
         <TextView
             android:id="@+id/textViewAlertCounter"
             android:layout_width="match_parent"
